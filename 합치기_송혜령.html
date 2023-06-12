@@ -66,6 +66,7 @@
 
         }
     </style>
+    <script src="./js/lib.js"></script>
     <script>
         let content;
         let wrapper;
@@ -75,13 +76,7 @@
         let img;
         let hintbox;
         let hint;
-        let pic0;
-        let pic1;
-        let pic2;
-        let pic3;
-        let pic4;
-
-        let index = 0;
+        let pic;
 
 
         let hpArray = [];
@@ -89,243 +84,83 @@
         let box;
         let game_score = 0;
         let h = 3;
+        let json;
+        let currentArray=[];
+     
 
-        let fruitArray = [
+
+        //사용자가 어떤 분야를 선택햇는지를 알수있는 index
+        let categoryIndex = 0;
+        let imgIndex=0;
+        let r = 0; //일차원 배열내의 어떤 요소를 사용자가 보고 있는지를 결정하는 index
+
+        //과일을 대상으로 한 데이터
+        let dataArray = [
             [
-                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
-                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
-                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
-                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
-                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
+                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" },
+                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" },
+                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" }
+                /*
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)", hint:"あかい(아카이/빨갛다)", answer:"りんご(링고)"  },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)", hint:"あかい(아카이/빨갛다)", answer:"りんご(링고)"  }
+                */
             ],
+
+
             [
-                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
-                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
-                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
-                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
-                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
-            ],
-            [
-                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
-                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
-                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
-                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
-                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
-            ]
-
-
-        ];
-        let fruitAnswerArray = [
-            ["りんご(링고)"],
-            ["すいか(스이카)"],
-            ["さくらんぼ(사쿠란보)"]
-
-
-        ];
-        let fruitHintArray = [
-            ["あかい(아카이/빨갛다)"],
-            ["たね(타네/씨앗)"],
-            ["うた(우타/노래)"]
-        ];
-
-        //////////////////////////////////////////////////
-
-        let colorArray = [
-            [
-                { id: "pic0", value: "./images/red.png", name: "あか(아카)" },
-                { id: "pic1", value: "./images/blue.png", name: "あお(아오)" },
-                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)" },
+                { id: "pic0", value: "./images/red.png", name: "あか(아카)", hint: "りんご(링고/사과)", answer: "あか(아카)" },
+                { id: "pic1", value: "./images/blue.png", name: "あお(아오)", hint: "うみ(우미/바다)", answer: "あお(아오)" },
+                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)", hint: "はっぱ(핫빠/잎)", answer: "みどり(미도리)" }
+                /*
                 { id: "pic3", value: "./images/yellow.png", name: "きいろい(키이로이)" },
                 { id: "pic4", value: "./images/white.png", name: "しろ(시로)" }
+                */
+
             ],
             [
-                { id: "pic0", value: "./images/red.png", name: "あか(아카)" },
-                { id: "pic1", value: "./images/blue.png", name: "あお(아오)" },
-                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)" },
-                { id: "pic3", value: "./images/yellow.png", name: "きいろい(키이로이)" },
-                { id: "pic4", value: "./images/white.png", name: "しろ(시로)" }
-            ],
-            [
-                { id: "pic0", value: "./images/red.png", name: "あか(아카)" },
-                { id: "pic1", value: "./images/blue.png", name: "あお(아오)" },
-                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)" },
-                { id: "pic3", value: "./images/yellow.png", name: "きいろい(키이로이)" },
-                { id: "pic4", value: "./images/white.png", name: "しろ(시로)" }
+                { id: "pic0", value: "./images/1.png", name: "いち(이치)", hint: "ひとり(히토리/한명)", answer: "いち(이치)" },
+                { id: "pic1", value: "./images/2.png", name: "に(니)", hint: "ふたり(후타리/두명)", answer: "に(니)" },
+                { id: "pic2", value: "./images/3.png", name: "さん(산)", hint: "みっつ(밋츠/세개)", answer: "さん(산)" }
+                /*
+                { id: "pic3", value: "./images/5.png", name: "ご(고)" },
+                { id: "pic4", value: "./images/6.png", name: "ろく(로크)" }
+                */
             ]
-
-
         ];
-        let colorAnswerArray = [
-            ["あか(아카)"],
-            ["あお(아오)"],
-            ["みどり(미도리)"]
+    
+        function createImg(n){
+            imgIndex=n;
 
-        ];
-        let colorHintArray = [
-            ["りんご(링고/사과)"],
-            ["うみ(우미/바다)"],
-            ["はっぱ(핫빠/잎)"]
-        ];
-        ///////////////////////////////////////////////////
-        let numArray = [
-            [
-                { id: "pic0", value: "./images/1.png", name: "いち(이치)" },
-                { id: "pic1", value: "./images/2.png", name: "に(니)" },
-                { id: "pic2", value: "./images/3.png", name: "さん(산)" },
-                { id: "pic3", value: "./images/5.png", name: "ご(고)" },
-                { id: "pic4", value: "./images/6.png", name: "ろく(로크)" }
-            ],
-            [
-                { id: "pic0", value: "./images/1.png", name: "いち(이치)" },
-                { id: "pic1", value: "./images/2.png", name: "に(니)" },
-                { id: "pic2", value: "./images/3.png", name: "さん(산)" },
-                { id: "pic3", value: "./images/5.png", name: "ご(고)" },
-                { id: "pic4", value: "./images/6.png", name: "ろく(로크)" }
-            ],
-            [
-                { id: "pic0", value: "./images/1.png", name: "いち(이치)" },
-                { id: "pic1", value: "./images/2.png", name: "に(니)" },
-                { id: "pic2", value: "./images/3.png", name: "さん(산)" },
-                { id: "pic3", value: "./images/5.png", name: "ご(고)" },
-                { id: "pic4", value: "./images/6.png", name: "ろく(로크)" }
-            ]
-
-
-        ];
-        let numAnswerArray = [
-            ["いち(이치)"],
-            ["に(니)"],
-            ["さん(산)"]
-
-        ]
-        let numHintArray = [
-            ["ひとり(히토리/한명)"],
-            ["ふたり(후타리/두명)"],
-            ["みっつ(밋츠/세개)"]
-        ]
-        //////////////////////////////////////////////
-
-        function createFruit() {
-            content.innerText = fruitAnswerArray[index][0];
-            //    console.log(content.innerText = fruitArray[index][1].value);
-
-
-            //  const randomArray = fruitArray.sort(() => 0.5 - Math.random());
-            //   const resultOb = fruitArray.sort((a, b)=>{    
-
-            //   })
-            pic0.src = fruitArray[index][0].value;
-            pic1.src = fruitArray[index][1].value;
-            pic2.src = fruitArray[index][2].value;
-            pic3.src = fruitArray[index][3].value;
-            pic4.src = fruitArray[index][4].value;
-
+            
+        }
+     
+        function next() {
+            //어떤 데이터를 출력할지를 랜덤하게 결정하여 화면에 보여주자
+            currentArray = dataArray[categoryIndex];
+            r = getRandom(currentArray.length);
+            json = currentArray[r];
+            content.innerText = json.name;
         }
 
-        function fruitHintBox() {
+        function createData(n) {
+            categoryIndex = n;
 
+            next();
+
+            let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
+            for (let i = 0; i < dataArray[categoryIndex].length; i++) {
+                pic[i].src = dataArray[categoryIndex][i].value;
+            }
+        }
+
+        function showHint() {
             hint = document.getElementById("hint");
-        
-                alert(fruitHintArray[index][0]);
-            }
-
-        function fruitNext() {
-
-            if (index <= fruitAnswerArray.length) {
-                index++;
-            }
-
-            console.log(index);
-            content.innerText = "";
-            createFruit();
-        }
-
-        /////////////////////////////////////////////
-        function createColor() {
-            content.innerText = colorAnswerArray[index][0];
-            //    console.log(content.innerText = fruitArray[index][1].value);
-
-
-            //  const randomArray = fruitArray.sort(() => 0.5 - Math.random());
-            //   const resultOb = fruitArray.sort((a, b)=>{    
-
-            //   })
-
-            pic0.src = colorArray[index][0].value;
-            pic1.src = colorArray[index][1].value;
-            pic2.src = colorArray[index][2].value;
-            pic3.src = colorArray[index][3].value;
-            pic4.src = colorArray[index][4].value;
-
-
-
-
-        }
-
-
-        function colorHintBox() {
-
-            hint = document.getElementById("hint");
-            alert(colorHintArray[index][0]);
-
-
-
-        }
-
-        function colorNext() {
-
-            if (index <= colorAnswerArray.length) {
-                index++;
-            }
-
-            console.log(index);
-            content.innerText = "";
-            createColor();
-        }
-
-        //////////////////////////////////////////////////
-
-        function createNum() {
-            content.innerText = numAnswerArray[index][0];
-            //    console.log(content.innerText = fruitArray[index][1].value);
-
-
-            //  const randomArray = fruitArray.sort(() => 0.5 - Math.random());
-            //   const resultOb = fruitArray.sort((a, b)=>{    
-
-            //   })
-            pic0.src = numArray[index][0].value;
-            pic1.src = numArray[index][1].value;
-            pic2.src = numArray[index][2].value;
-            pic3.src = numArray[index][3].value;
-            pic4.src = numArray[index][4].value;
-
-
-
-
-
+            alert(dataArray[categoryIndex][r].hint);
         }
 
 
 
-        function numHintBox() {
 
-            hint = document.getElementById("hint");
-            alert(numHintArray[index][0]);
-
-
-        }
-
-        function numNext() {
-
-            if (index <= numAnswerArray.length) {
-                index++;
-            }
-
-            console.log(index);
-            content.innerText = "";
-            createNum();
-        }
         ////////////////////////////////////////////////////////////
 
         function setScore() {
@@ -364,13 +199,22 @@
             setScore();
             createHp();
 
-            pic0 = document.getElementById("pic0");
-            pic1 = document.getElementById("pic1");
-            pic2 = document.getElementById("pic2");
-            pic3 = document.getElementById("pic3");
-            pic4 = document.getElementById("pic4");
+            img.addEventListener("click", function () {
+                for (let i = 0; i < dataArray.length; i++) {
+                    if (creaetImg[i].name == dataArray[categoryIndex][i].answer) {
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        next();
+                    } else {
+                        alert("오답!");
+                        //hpArray[h].style.background = "skyblue";
+                    }
+                    break;
+                }
+            });
 
-
+            /*
             pic0.addEventListener("click", function () {
                 for (let i = 0; i < fruitAnswerArray.length; i++) {
                     if (fruitArray[index][0].name === fruitAnswerArray[index][i]) {
@@ -491,6 +335,13 @@
                     break;
                 }
             });
+          
+            hint.addEventListener("click", function () {
+
+
+
+            });
+              */
 
         });
 
@@ -501,9 +352,9 @@
 
 <body>
     메뉴를 선택해주세요</br>
-    <button id="bt1" onClick="createFruit()">과일 공부</button>
-    <button id="bt2" onClick="createColor()">색깔 공부</button>
-    <button id="bt3" onClick="createNum()">숫자 공부</button>
+    <button id="bt1" onClick="createData(0)">과일 공부</button>
+    <button id="bt2" onClick="createData(1)">색깔 공부</button>
+    <button id="bt3" onClick="createData(2)">숫자 공부</button>
     <div id="wrapper">
         <div id="header">
             <div id="hp"></div>
@@ -511,14 +362,14 @@
         </div>
         <div id="content"></div>
         <div id="hintbox">
-            <button id="hint" onClick="hintbox()">힌트</button>
+            <button id="hint" onClick="showHint()">힌트</button>
 
         </div>
-        <img id="pic0">
-        <img id="pic1">
-        <img id="pic2">
-        <img id="pic3">
-        <img id="pic4">
+        <img name="pic" onClick="createImg(1)">
+        <img name="pic" onClick="createImg(2)">
+        <img name="pic" onClick="createImg(3)">
+        <img name="pic" onClick="createImg(4)">
+        <img name="pic" onClick="createImg(5)">
 
 
     </div>
