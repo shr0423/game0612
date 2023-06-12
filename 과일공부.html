@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper {
+            width: 400px;
+            height: 800px;
+            background: greenyellow;
+
+
+        }
+
+        #header {
+            width: 100%;
+            height: 80px;
+
+            background: skyblue;
+        }
+
+        #hp {
+            font-size: 50px;
+            color: red;
+            float: left;
+        }
+
+        #score {
+            font-size: 50px;
+            float: left;
+            margin-left: 200px;
+         
+        }
+
+        #content {
+            width: 100%;
+            height: 100px;
+            background: greenyellow;
+            font-size: 30px;
+            text-align: center;
+            border: 5px solid green;
+            box-sizing: border-box;
+        }
+
+        #hint {
+            width: 60%;
+            height: 60px;
+            font-size: 40px;
+            border-radius: 10%;
+            background: orange;
+
+
+        }
+
+        #hintbox {
+            text-align: center;
+        }
+
+        img {
+            width: 180px;
+            height: 180px;
+            display: inline-block;
+
+
+        }
+    </style>
+
+    <script>
+        let content;
+        let wrapper;
+        let hp;
+        let header;
+        let score = 0;
+        let img;
+        let hintbox;
+        let hint;
+        let pic0;
+        let pic1;
+        let pic2;
+        let pic3;
+        let pic4;
+
+        let index = 0;
+
+
+        let hpArray = [];
+        let size = 35;
+        let box;    
+        let game_score=0;
+        let h=3;
+  
+ 
+        let fruitArray = [
+            [
+                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
+                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
+                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
+            ],
+            [
+                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
+                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
+                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
+            ],
+            [
+                { id: "pic0", value: "./images/apple.png", name: "りんご(링고)" },
+                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)" },
+                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)" },
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)" },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)" }
+            ]
+
+
+        ];
+        let fruitAnswerArray = [
+            ["りんご(링고)"],
+            ["さくらんぼ(사쿠란보)"],
+            ["すいか(스이카)"]
+
+        ]
+        let fruitHintArray = [
+            ["あかい(아카이/빨갛다)"],
+            ["うた(우타/노래)"],
+            ["たね(타네/씨앗)"]
+        ]
+       
+
+        function createFruit() {
+            content.innerText = fruitAnswerArray[index][0];
+            //    console.log(content.innerText = fruitArray[index][1].value);
+
+
+            //  const randomArray = fruitArray.sort(() => 0.5 - Math.random());
+            //   const resultOb = fruitArray.sort((a, b)=>{    
+
+            //   })
+            pic0.src = fruitArray[index][0].value;
+            pic1.src = fruitArray[index][1].value;
+            pic2.src = fruitArray[index][2].value;
+            pic3.src = fruitArray[index][3].value;
+            pic4.src = fruitArray[index][4].value;
+
+            
+
+
+
+        }
+       
+        function fruitHintBox() {
+
+            hint = document.getElementById("hint");
+            alert(fruitHintArray[index][0]);
+
+
+
+        }
+
+        function fruitNext() {
+          
+            if (index <= fruitAnswerArray.length) {
+                index++;
+            }
+
+            console.log(index);
+            content.innerText = "";
+            createFruit();
+        }
+        function setScore() {
+            score.innerText = game_score + "점";
+        }
+        function createHp() {
+            for (let i = 0; i < 3; i++) {
+                let box = document.createElement("div");
+                box.style.width = size + "px";
+                box.style.height = size + "px";
+                box.style.background = "red";
+                box.style.border = "2px solid black";
+                box.style.position = "absolute";
+                box.style.left = 15+ i * size + "px";
+                box.style.top= 80 +"px";
+                hp.appendChild(box);
+                hpArray.push(box);
+            }
+        }
+        function init() {
+            wrapper = document.getElementById("wrapper");
+            header = document.getElementById("header");
+            hp = document.getElementById("hp");
+            score = document.getElementById("score");
+            content = document.getElementById("content");
+            img = document.querySelector("img");
+            footer = document.getElementById("footer");
+            hintbox = document.getElementById("hintbox");
+            hint = document.getElementById("hint");
+        }
+        addEventListener("load", function () {
+            init();
+            setScore();
+            createHp();
+
+            pic0 = document.getElementById("pic0");
+            pic1 = document.getElementById("pic1");
+            pic2 = document.getElementById("pic2");
+            pic3 = document.getElementById("pic3");
+            pic4 = document.getElementById("pic4");
+
+
+
+            pic0.addEventListener("click", function () {
+                for (let i = 0; i < fruitAnswerArray.length; i++) {
+                    if (fruitArray[index][0].name === fruitAnswerArray[index][i]) {
+
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        fruitNext();
+                    } else {
+
+                        alert("오답!");
+                    
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
+                    }
+                    break;
+                }
+
+
+            });
+            pic1.addEventListener("click", function () {
+                for (let i = 0; i < fruitAnswerArray.length; i++) {
+                    if (fruitArray[index][1].name === fruitAnswerArray[index][i]) {
+
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        fruitNext();
+                    } else {
+
+                        alert("오답!");
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
+                        console.log(h)
+                    }
+                    break;
+                }
+            });
+            pic2.addEventListener("click", function () {
+                for (let i = 0; i < fruitAnswerArray.length; i++) {
+                    if (fruitArray[index][2].name === fruitAnswerArray[index][i]) {
+
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        fruitNext();
+                    } else {
+
+                        alert("오답!");
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
+                        console.log(h)
+                    }
+                    break;
+                }
+            });
+            pic3.addEventListener("click", function () {
+                for (let i = 0; i < fruitAnswerArray.length; i++) {
+                    if (fruitArray[index][3].name === fruitAnswerArray[index][i]) {
+
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        fruitNext();
+                    } else {
+
+                        alert("오답!");
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
+                    }
+                    break;
+                }
+            });
+            pic4.addEventListener("click", function () {
+                for (let i = 0; i < fruitAnswerArray.length; i++) {
+                    if (fruitArray[index][4].name === fruitAnswerArray[index][i]) {
+
+                        alert("정답!");
+                        game_score += 10;
+                        setScore();
+                        fruitNext();
+                    } else {
+
+                        alert("오답!");
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
+                    }
+                    break;
+                }
+            });
+            
+        });
+    </script>
+</head>
+
+<body>
+    메뉴를 선택해주세요</br>
+    <button id="bt1" onClick="createFruit()">과일 공부</button>
+    <button id="bt2" onClick="createColor()">색깔 공부</button>
+    <button id="bt3" onClick="createNum()">숫자 공부</button>
+    <div id="wrapper">
+        <div id="header">
+            <div id="hp"></div>
+            <span id="score">0점</span>
+        </div>
+        <div id="content"></div>
+        <div id="hintbox">
+            <button id="hint" onClick="hintBox()">힌트</button>
+
+        </div>
+        <img id="pic0">
+        <img id="pic1">
+        <img id="pic2">
+        <img id="pic3">
+        <img id="pic4">
+
+
+    </div>
+
+</body>
+
+</html>
