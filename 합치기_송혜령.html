@@ -85,55 +85,47 @@
         let game_score = 0;
         let h = 3;
         let json;
-        let currentArray=[];
-     
+        let currentArray = [];
 
 
         //사용자가 어떤 분야를 선택햇는지를 알수있는 index
         let categoryIndex = 0;
-        let imgIndex=0;
+        let imgIndex = 0;
         let r = 0; //일차원 배열내의 어떤 요소를 사용자가 보고 있는지를 결정하는 index
 
         //과일을 대상으로 한 데이터
         let dataArray = [
             [
                 { id: "pic0", value: "./images/apple.png", name: "りんご(링고)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" },
-                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" },
-                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" }
-                /*
-                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)", hint:"あかい(아카이/빨갛다)", answer:"りんご(링고)"  },
-                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)", hint:"あかい(아카이/빨갛다)", answer:"りんご(링고)"  }
-                */
+                { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)", hint: "たね(타네/씨앗)", answer: "すいか(스이카)" },
+                { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)", hint: "うた(우타/노래)", answer: "さくらんぼ(사쿠란보)" },
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)", hint: "あかい(아카이/빨갛다)", answer: "ぶどう(부도우)" },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)", hint: "いち(이치/하나)", answer: "いちご(이치고)" }
+
             ],
 
 
             [
                 { id: "pic0", value: "./images/red.png", name: "あか(아카)", hint: "りんご(링고/사과)", answer: "あか(아카)" },
                 { id: "pic1", value: "./images/blue.png", name: "あお(아오)", hint: "うみ(우미/바다)", answer: "あお(아오)" },
-                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)", hint: "はっぱ(핫빠/잎)", answer: "みどり(미도리)" }
-                /*
-                { id: "pic3", value: "./images/yellow.png", name: "きいろい(키이로이)" },
-                { id: "pic4", value: "./images/white.png", name: "しろ(시로)" }
-                */
+                { id: "pic2", value: "./images/green.png", name: "みどり(미도리)", hint: "はっぱ(핫빠/잎)", answer: "みどり(미도리)" },
+                { id: "pic3", value: "./images/yellow.png", name: "きいろい(키이로이)", hint: "おうごん(오공/황금)", answer: "きいろい(키이로이)" },
+                { id: "pic4", value: "./images/white.png", name: "しろ(시로)", hint: "ゆき(유키/눈)", answer: "しろ(시로)" }
+
 
             ],
             [
                 { id: "pic0", value: "./images/1.png", name: "いち(이치)", hint: "ひとり(히토리/한명)", answer: "いち(이치)" },
                 { id: "pic1", value: "./images/2.png", name: "に(니)", hint: "ふたり(후타리/두명)", answer: "に(니)" },
-                { id: "pic2", value: "./images/3.png", name: "さん(산)", hint: "みっつ(밋츠/세개)", answer: "さん(산)" }
-                /*
-                { id: "pic3", value: "./images/5.png", name: "ご(고)" },
-                { id: "pic4", value: "./images/6.png", name: "ろく(로크)" }
-                */
+                { id: "pic2", value: "./images/3.png", name: "さん(산)", hint: "みっつ(밋츠/세개)", answer: "さん(산)" },
+                { id: "pic3", value: "./images/5.png", name: "ご(고)", hint: "ゆび(유비/손가락)", answer: "ご(고)" },
+                { id: "pic4", value: "./images/6.png", name: "ろく(로크)", hint: "なつ(나츠/여름)", answer: "ろく(로크)" }
+
             ]
         ];
-    
-        function createImg(n){
-            imgIndex=n;
 
-            
-        }
-     
+
+
         function next() {
             //어떤 데이터를 출력할지를 랜덤하게 결정하여 화면에 보여주자
             currentArray = dataArray[categoryIndex];
@@ -144,7 +136,7 @@
 
         function createData(n) {
             categoryIndex = n;
-
+            
             next();
 
             let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
@@ -199,20 +191,45 @@
             setScore();
             createHp();
 
-            img.addEventListener("click", function () {
-                for (let i = 0; i < dataArray.length; i++) {
-                    if (creaetImg[i].name == dataArray[categoryIndex][i].answer) {
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        next();
-                    } else {
-                        alert("오답!");
-                        //hpArray[h].style.background = "skyblue";
-                    }
-                    break;
-                }
-            });
+            imgGroup = document.querySelectorAll('img');
+
+            for (let i = 0; i < dataArray[categoryIndex].length; i++) {
+                imgGroup[i].addEventListener('click', function () {
+                    let nameNum = dataArray[categoryIndex][i].name;
+                    let ansNum = dataArray[categoryIndex][i].answer;
+                    let hpNum = hpArray[i];
+                    console.log(dataArray[categoryIndex][r])
+                    // if (json.name==dataArray[categoryIndex][r].answer) {
+                    
+                    //     alert('정답')
+                    //     game_score += 10;
+                    //     setScore();
+                    //     next();
+                    // } else {
+                    //     alert('오답')
+                    // }
+                 
+                    //   console.log(hpNum)
+
+                });
+
+            }
+
+
+            // img.addEventListener("click", function () {
+            //     for (let i = 0; i < dataArray.length; i++) {
+            //         if (dataArray[categoryIndex][i].name == dataArray[categoryIndex][i].answer) {
+            //             alert("정답!");
+            //             game_score += 10;
+            //             setScore();
+            //             next();
+            //         } else {
+            //             alert("오답!");
+            //             //hpArray[h].style.background = "skyblue";
+            //         }
+            //         break;
+            //     }
+            // });
 
             /*
             pic0.addEventListener("click", function () {
@@ -365,11 +382,11 @@
             <button id="hint" onClick="showHint()">힌트</button>
 
         </div>
-        <img name="pic" onClick="createImg(1)">
-        <img name="pic" onClick="createImg(2)">
-        <img name="pic" onClick="createImg(3)">
-        <img name="pic" onClick="createImg(4)">
-        <img name="pic" onClick="createImg(5)">
+        <img name="pic">
+        <img name="pic">
+        <img name="pic">
+        <img name="pic">
+        <img name="pic">
 
 
     </div>
