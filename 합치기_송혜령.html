@@ -70,6 +70,7 @@
         }
     </style>
     <script src="./js/lib.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
         let content;
         let wrapper;
@@ -147,7 +148,7 @@
 
         function showHint() {
             hint = document.getElementById("hint");
-            alert(dataArray[categoryIndex][r].hint);
+            Swal.fire("힌트: "+dataArray[categoryIndex][r].hint);
         }
 
 
@@ -200,13 +201,17 @@
 
                     //서로 데이터 비교하기 
                     if(currentJson.name == selectedJson.name){
-                        alert("정답입니다!");
+                        Swal.fire('Good job!','정답입니다!','success');
                         game_score += 10;
                         setScore();
                         next();
 
                     }else{
-                        alert("오답입니다!");
+                        Swal.fire({
+                            icon:'error',
+                            title: 'Oops...',
+                            text:'오답입니다!'
+                        });
                         if(h > 0){
                             h--;
                             if(h <= 0){
