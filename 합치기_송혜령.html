@@ -49,9 +49,7 @@
             height: 60px;
             font-size: 40px;
             border-radius: 10%;
-            background: orange;
-
-
+            background: yellow;
         }
 
         #hintbox {
@@ -63,11 +61,38 @@
             height: 180px;
             display: inline-block;
 
-
         }
 
         img:hover {
             border: 4px solid red;
+        }
+
+        button {
+            cursor: pointer;
+            width: 100px;
+            height: 60px;
+            background: yellow;
+            border-radius: 10%;
+        }
+
+        button:hover {
+            border: 5px solid blue;
+        }
+
+        @keyframes blink-effect {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .blink {
+            animation: blink-effect 1s step-end infinite;
+            /* 
+        animation-name: blink-effect; 
+        animation-duration: 1s; 
+        animation-iteration-count:infinite; 
+        animation-timing-function:step-end; 
+    */
         }
     </style>
     <script src="./js/lib.js"></script>
@@ -84,7 +109,7 @@
         let pic;
 
         let hpArray = [];
-        let size = 35;
+        let size = 40;
         let box;
         let game_score = 0;
         let h = 3;
@@ -166,7 +191,7 @@
                 box.style.border = "2px solid black";
                 box.style.position = "absolute";
                 box.style.left = 15 + i * size + "px";
-                box.style.top = 80 + "px";
+                box.style.top = 130 + "px";
                 hp.appendChild(box);
                 hpArray.push(box);
             }
@@ -204,7 +229,7 @@
                     //서로 데이터 비교하기 
                     if (currentJson.name == selectedJson.name) {
                         game_score += 20;
-                      
+
                         if (game_score < 100) {
                             Swal.fire('Good job!', '정답입니다!', 'success');
                         } else {
@@ -247,7 +272,8 @@
 </head>
 
 <body>
-    메뉴를 선택해주세요</br>
+
+    <p class="blink">메뉴를 선택해주세요</p>
     <button id="bt1" onClick="createData(0)">과일 공부</button>
     <button id="bt2" onClick="createData(1)">색깔 공부</button>
     <button id="bt3" onClick="createData(2)">숫자 공부</button>
