@@ -78,7 +78,6 @@
         let hint;
         let pic;
 
-
         let hpArray = [];
         let size = 35;
         let box;
@@ -178,7 +177,7 @@
             hint = document.getElementById("hint");
         }
 
-
+       
         addEventListener("load", function () {
             init();
             setScore();
@@ -198,9 +197,21 @@
 
                     //서로 데이터 비교하기 
                     if(currentJson.name == selectedJson.name){
-                        console.log("맞아요");
+                        alert("정답입니다!");
+                        game_score += 10;
+                        setScore();
+                        next();
+
                     }else{
-                        console.log("틀료요");
+                        alert("오답입니다!");
+                        if(h > 0){
+                            h--;
+                            if(h <= 0){
+                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
+                                location.reload();
+                            }
+                        } 
+                        hpArray[h].style.background = "skyblue";
                     }
 
                 });
