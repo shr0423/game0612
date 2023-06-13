@@ -155,6 +155,7 @@
 
         function setScore() {
             score.innerText = game_score + "점";
+
         }
         function createHp() {
             for (let i = 0; i < 3; i++) {
@@ -202,8 +203,14 @@
 
                     //서로 데이터 비교하기 
                     if (currentJson.name == selectedJson.name) {
-                        Swal.fire('Good job!', '정답입니다!', 'success');
-                        game_score += 10;
+                        game_score += 20;
+                      
+                        if (game_score < 100) {
+                            Swal.fire('Good job!', '정답입니다!', 'success');
+                        } else {
+                            Swal.fire('Good job!', '축하합니다!100점입니다!', 'success');
+                        }
+
                         setScore();
                         next();
 
@@ -223,7 +230,7 @@
                                 }).then(function () {
                                     window.location.reload();
                                 });
-                         
+
                             }
                         }
                         hpArray[h].style.background = "skyblue";
