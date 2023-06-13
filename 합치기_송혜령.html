@@ -184,25 +184,24 @@
             setScore();
             createHp();
 
-            imgGroup = document.querySelectorAll('img');
+            imgGroup = document.getElementsByName('pic');
 
             for (let i = 0; i < dataArray[categoryIndex].length; i++) {
                 imgGroup[i].addEventListener("click", function () {
-                    let nameNum = dataArray[categoryIndex][i].name;
-                    let ansNum = dataArray[categoryIndex][i].answer;
-                    let hpNum = hpArray[i];
-                    console.log(dataArray[categoryIndex][r].answer)
-                    // if (json.name==dataArray[categoryIndex][r].answer) {
+                    //이미지를 클릭하면, 클릭된 이미지가 데이터 배열의 몇번째에 들어있는지 조사하자 
+
+                    //유저가 보고있는 현재 json
+                    let currentJson=dataArray[categoryIndex][r];
                     
-                    //     alert('정답')
-                    //     game_score += 10;
-                    //     setScore();
-                    //     next();
-                    // } else {
-                    //     alert('오답')
-                    // }
-                 
-                    //   console.log(hpNum)
+                    //선택한 이미지에 해당하는 json 추출 
+                    let selectedJson = dataArray[categoryIndex][i];
+
+                    //서로 데이터 비교하기 
+                    if(currentJson.name == selectedJson.name){
+                        console.log("맞아요");
+                    }else{
+                        console.log("틀료요");
+                    }
 
                 });
 
