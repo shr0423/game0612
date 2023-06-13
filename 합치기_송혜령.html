@@ -99,8 +99,8 @@
                 { id: "pic0", value: "./images/apple.png", name: "りんご(링고)", hint: "あかい(아카이/빨갛다)", answer: "りんご(링고)" },
                 { id: "pic1", value: "./images/watermelon.png", name: "すいか(스이카)", hint: "たね(타네/씨앗)", answer: "すいか(스이카)" },
                 { id: "pic2", value: "./images/cherry.png", name: "さくらんぼ(사쿠란보)", hint: "うた(우타/노래)", answer: "さくらんぼ(사쿠란보)" },
-                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)", hint: "あかい(아카이/빨갛다)", answer: "ぶどう(부도우)" },
-                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)", hint: "いち(이치/하나)", answer: "いちご(이치고)" }
+                { id: "pic3", value: "./images/grape.png", name: "ぶどう(부도우)", hint: "あお(아오/파랗다)", answer: "ぶどう(부도우)" },
+                { id: "pic4", value: "./images/strawberry.png", name: "いちご(이치고)", hint: "たねがない(타네가나이/씨앗이 없다)", answer: "いちご(이치고)" }
 
             ],
 
@@ -123,8 +123,6 @@
 
             ]
         ];
-
-
 
         function next() {
             //어떤 데이터를 출력할지를 랜덤하게 결정하여 화면에 보여주자
@@ -150,10 +148,6 @@
             alert(dataArray[categoryIndex][r].hint);
         }
 
-
-
-
-        ////////////////////////////////////////////////////////////
 
         function setScore() {
             score.innerText = game_score + "점";
@@ -184,7 +178,6 @@
             hint = document.getElementById("hint");
         }
 
-        ///////////////////////////////////////////////////
 
         addEventListener("load", function () {
             init();
@@ -194,11 +187,11 @@
             imgGroup = document.querySelectorAll('img');
 
             for (let i = 0; i < dataArray[categoryIndex].length; i++) {
-                imgGroup[i].addEventListener('click', function () {
+                imgGroup[i].addEventListener("click", function () {
                     let nameNum = dataArray[categoryIndex][i].name;
                     let ansNum = dataArray[categoryIndex][i].answer;
                     let hpNum = hpArray[i];
-                    console.log(dataArray[categoryIndex][r])
+                    console.log(dataArray[categoryIndex][r].answer)
                     // if (json.name==dataArray[categoryIndex][r].answer) {
                     
                     //     alert('정답')
@@ -214,156 +207,10 @@
                 });
 
             }
-
-
-            // img.addEventListener("click", function () {
-            //     for (let i = 0; i < dataArray.length; i++) {
-            //         if (dataArray[categoryIndex][i].name == dataArray[categoryIndex][i].answer) {
-            //             alert("정답!");
-            //             game_score += 10;
-            //             setScore();
-            //             next();
-            //         } else {
-            //             alert("오답!");
-            //             //hpArray[h].style.background = "skyblue";
-            //         }
-            //         break;
-            //     }
-            // });
-
-            /*
-            pic0.addEventListener("click", function () {
-                for (let i = 0; i < fruitAnswerArray.length; i++) {
-                    if (fruitArray[index][0].name === fruitAnswerArray[index][i]) {
-
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        fruitNext();
-                    } else {
-
-                        alert("오답!");
-
-                        if (h > 0) {
-                            h--;
-                            if (h <= 0) {
-                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
-                                location.reload();
-                            }
-                        }
-                        hpArray[h].style.background = "skyblue";
-                    }
-                    break;
-                }
-
-
-            });
-            pic1.addEventListener("click", function () {
-                for (let i = 0; i < fruitAnswerArray.length; i++) {
-                    if (fruitArray[index][1].name === fruitAnswerArray[index][i]) {
-
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        fruitNext();
-                    } else {
-
-                        alert("오답!");
-                        if (h > 0) {
-                            h--;
-                            if (h <= 0) {
-                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
-                                location.reload();
-                            }
-                        }
-                        hpArray[h].style.background = "skyblue";
-                        console.log(h)
-                    }
-                    break;
-                }
-            });
-            pic2.addEventListener("click", function () {
-                for (let i = 0; i < fruitAnswerArray.length; i++) {
-                    if (fruitArray[index][2].name === fruitAnswerArray[index][i]) {
-
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        fruitNext();
-                    } else {
-
-                        alert("오답!");
-                        if (h > 0) {
-                            h--;
-                            if (h <= 0) {
-                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
-                                location.reload();
-                            }
-                        }
-                        hpArray[h].style.background = "skyblue";
-                        console.log(h)
-                    }
-                    break;
-                }
-            });
-            pic3.addEventListener("click", function () {
-                for (let i = 0; i < fruitAnswerArray.length; i++) {
-                    if (fruitArray[index][3].name === fruitAnswerArray[index][i]) {
-
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        fruitNext();
-                    } else {
-
-                        alert("오답!");
-                        if (h > 0) {
-                            h--;
-                            if (h <= 0) {
-                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
-                                location.reload();
-                            }
-                        }
-                        hpArray[h].style.background = "skyblue";
-                    }
-                    break;
-                }
-            });
-            pic4.addEventListener("click", function () {
-                for (let i = 0; i < fruitAnswerArray.length; i++) {
-                    if (fruitArray[index][4].name === fruitAnswerArray[index][i]) {
-
-                        alert("정답!");
-                        game_score += 10;
-                        setScore();
-                        fruitNext();
-                    } else {
-
-                        alert("오답!");
-                        if (h > 0) {
-                            h--;
-                            if (h <= 0) {
-                                alert("게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러야 합니다.")
-                                location.reload();
-                            }
-                        }
-                        hpArray[h].style.background = "skyblue";
-                    }
-                    break;
-                }
-            });
-          
-            hint.addEventListener("click", function () {
-
-
-
-            });
-              */
-
+           
         });
 
-
-
+        
     </script>
 </head>
 
