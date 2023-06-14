@@ -47,19 +47,20 @@
             text-align: center;
             border: 5px solid green;
             box-sizing: border-box;
+            padding-top:20px;
         }
 
         #hint {
             width: 60%;
             height: 60px;
-            font-size: 40px;
-            border-radius: 10%;
+            font-size: 30px;
             background: pink;
+            border-radius: 10%;
         }
 
         #hintbox {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 10px;   
         }
 
         img {
@@ -278,10 +279,10 @@
 
                         clearTimeout(timer);
                         if (game_score < 100) {
-                            Swal.fire('Good job!', '정답입니다!', 'success');
+                            Swal.fire('せいかい!', '정답입니다!', 'success');
                         } else {
                             Swal.fire({
-                                title: 'Good job!',
+                                title: 'おめでとう!!',
                                 text: '축하합니다!100점입니다! 게임을 계속 진행하시겠습니까?',
                                 icon: 'success',
 
@@ -290,6 +291,8 @@
                                 cancelButtonText: '취소'
                             }).then(result => {
                                 if (result.isConfirmed) {
+                                    game_score=0;
+                                    setScore();
                                     next();
                                 } else if (result.isDismissed) {
                                     window.location.reload();
@@ -305,14 +308,15 @@
                     } else {
                         Swal.fire({
                             icon: 'error',
-                            title: 'Oops...',
+                            title: 'はずれ',
                             text: '오답입니다!'
                         });
                         if (h > 0) {
                             h--;
                             if (h <= 0) {
                                 Swal.fire({
-                                    title: '게임이 끝났습니다. 다시 시작을 하시려면 버튼을 눌러주세요.',
+                                    title:'しゅうりょう',
+                                    text: '게임이 끝났습니다. 초기화면으로 돌아갑니다.',
                                     icon: 'info',
                                     confirmButtonText: 'OK'
                                 }).then(function () {
@@ -336,7 +340,7 @@
 
 <body>
 
-    <p class="blink">메뉴를 선택해주세요 ▼ </p>
+    <p class="blink">원하시는 공부버튼을 클릭해주세요 ▼ </p>
 
     <button id="bt1" onClick="createData(0)">과일 공부</button>
     <button id="bt2" onClick="createData(1)">색깔 공부</button>
