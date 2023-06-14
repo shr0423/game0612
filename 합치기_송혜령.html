@@ -11,7 +11,6 @@
             height: 800px;
             background: greenyellow;
 
-
         }
 
         #header {
@@ -107,6 +106,8 @@
         let hintbox;
         let hint;
         let pic;
+        let timer;
+      
 
         let hpArray = [];
         let size = 40;
@@ -163,13 +164,16 @@
 
         function createData(n) {
             categoryIndex = n;
-
+ 
             next();
 
-            let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
+            pageRefresh();
+
+                let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
             for (let i = 0; i < dataArray[categoryIndex].length; i++) {
                 pic[i].src = dataArray[categoryIndex][i].value;
             }
+            
         }
 
         function showHint() {
@@ -208,6 +212,23 @@
             hint = document.getElementById("hint");
         }
 
+        function pageRefresh() {
+          let timer = window.setTimeout("pageReload()", 3000);
+       
+        }
+
+        function pageReload() {
+            Swal.fire({
+                title: '제한시간 10초가 경과하여 게임을 종료합니다',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            }).then(function () {
+                window.location.reload();
+            });
+         
+        }
+
+
 
         addEventListener("load", function () {
             init();
@@ -235,10 +256,10 @@
                         } else {
                             Swal.fire('Good job!', '축하합니다!100점입니다!', 'success');
                         }
-
+               
                         setScore();
                         next();
-
+                   
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -281,6 +302,7 @@
         <div id="header">
             <div id="hp"></div>
             <span id="score">0점</span>
+
         </div>
         <div id="content"></div>
         <div id="hintbox">
