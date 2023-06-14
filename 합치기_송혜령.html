@@ -29,8 +29,15 @@
         #score {
             font-size: 50px;
             float: left;
-            margin-left: 200px;
+            margin-left: 180px;
 
+        }
+
+        #time {
+            font-size: 40px;
+            float: left;
+            margin-left: 25px;
+            margin-top: 10px;
         }
 
         #content {
@@ -107,7 +114,7 @@
         let hint;
         let pic;
         let timer;
-      
+        let st;
 
         let hpArray = [];
         let size = 40;
@@ -122,6 +129,7 @@
         let categoryIndex = 0;
         let imgIndex = 0;
         let r = 0; //일차원 배열내의 어떤 요소를 사용자가 보고 있는지를 결정하는 index
+        let sec = 5;
 
         //과일을 대상으로 한 데이터
         let dataArray = [
@@ -160,21 +168,24 @@
             r = getRandom(currentArray.length);
             json = currentArray[r];
             content.innerText = json.name;
-  
+
         }
 
         function createData(n) {
             categoryIndex = n;
- 
+
             next();
 
             pageRefresh();
 
-                let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
+            sec = 5;
+            timeout();
+
+            let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
             for (let i = 0; i < dataArray[categoryIndex].length; i++) {
                 pic[i].src = dataArray[categoryIndex][i].value;
             }
-            
+
         }
 
         function showHint() {
@@ -213,9 +224,22 @@
             hint = document.getElementById("hint");
         }
 
+      
+        function timeout() {
+            clearTimeout(st); //기존꺼 죽이기
+            time.innerText = sec;
+            sec--;
+            if (sec < 0) {
+                sec = 0;
+            }
+            
+            //재귀호출
+            st=setTimeout("timeout()", 1000);
+        }
+
         function pageRefresh() {
-        timer = window.setTimeout("pageReload()", 5000);
-       
+            timer = window.setTimeout("pageReload()", 5000);
+
         }
 
         function pageReload() {
@@ -226,9 +250,8 @@
             }).then(function () {
                 window.location.reload();
             });
-         
-        }
 
+        }
 
 
         addEventListener("load", function () {
@@ -251,17 +274,21 @@
                     //서로 데이터 비교하기 
                     if (currentJson.name == selectedJson.name) {
                         game_score += 20;
+
+                        sec = 5;                        
+                        timeout();
+
                         clearTimeout(timer);
                         if (game_score < 100) {
                             Swal.fire('Good job!', '정답입니다!', 'success');
                         } else {
                             Swal.fire('Good job!', '축하합니다!100점입니다!', 'success');
                         }
-               
+
                         setScore();
                         next();
                         pageRefresh();
-                   
+
                     } else {
                         Swal.fire({
                             icon: 'error',
@@ -304,7 +331,7 @@
         <div id="header">
             <div id="hp"></div>
             <span id="score">0점</span>
-
+            <span id="time">5초</span>
         </div>
         <div id="content"></div>
         <div id="hintbox">
