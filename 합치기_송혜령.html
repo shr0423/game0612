@@ -127,7 +127,7 @@
         let categoryIndex = 0;
         let imgIndex = 0;
         let r = 0; //일차원 배열내의 어떤 요소를 사용자가 보고 있는지를 결정하는 index
-        let sec = 5;
+        let sec = 10;
 
         //과일을 대상으로 한 데이터
         let dataArray = [
@@ -176,7 +176,7 @@
 
             pageRefresh();
 
-            sec = 5;
+            sec = 10;
             timeout();
 
             let pic = document.getElementsByName("pic"); //이름이 같은 이미지를 배열로 받아놓음
@@ -236,13 +236,13 @@
         }
 
         function pageRefresh() {
-            timer = window.setTimeout("pageReload()", 5000);
+            timer = window.setTimeout("pageReload()", 10000);
 
         }
 
         function pageReload() {
             Swal.fire({
-                title: '제한시간 5초가 경과하여 게임을 종료합니다',
+                title: '제한시간 10초가 경과하여 게임을 종료합니다',
                 icon: 'info',
                 confirmButtonText: 'OK'
             }).then(function () {
@@ -273,7 +273,7 @@
                     if (currentJson.name == selectedJson.name) {
                         game_score += 20;
 
-                        sec = 5;
+                        sec = 10;
                         timeout();
 
                         clearTimeout(timer);
@@ -345,7 +345,7 @@
         <div id="header">
             <div id="hp"></div>
             <span id="score">0점</span>
-            <span id="time">5초</span>
+            <span id="time">10초</span>
         </div>
         <div id="content"></div>
         <div id="hintbox">
