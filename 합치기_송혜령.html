@@ -160,6 +160,7 @@
             r = getRandom(currentArray.length);
             json = currentArray[r];
             content.innerText = json.name;
+  
         }
 
         function createData(n) {
@@ -213,13 +214,13 @@
         }
 
         function pageRefresh() {
-          let timer = window.setTimeout("pageReload()", 3000);
+        timer = window.setTimeout("pageReload()", 5000);
        
         }
 
         function pageReload() {
             Swal.fire({
-                title: '제한시간 10초가 경과하여 게임을 종료합니다',
+                title: '제한시간 5초가 경과하여 게임을 종료합니다',
                 icon: 'info',
                 confirmButtonText: 'OK'
             }).then(function () {
@@ -250,7 +251,7 @@
                     //서로 데이터 비교하기 
                     if (currentJson.name == selectedJson.name) {
                         game_score += 20;
-
+                        clearTimeout(timer);
                         if (game_score < 100) {
                             Swal.fire('Good job!', '정답입니다!', 'success');
                         } else {
@@ -259,6 +260,7 @@
                
                         setScore();
                         next();
+                        pageRefresh();
                    
                     } else {
                         Swal.fire({
