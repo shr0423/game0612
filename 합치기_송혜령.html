@@ -280,11 +280,23 @@
                         if (game_score < 100) {
                             Swal.fire('Good job!', '정답입니다!', 'success');
                         } else {
-                            Swal.fire('Good job!', '축하합니다!100점입니다! 처음화면으로 돌아갑니다.', 'success')
-                                .then(function () {
+                            Swal.fire({
+                                title: 'Good job!',
+                                text: '축하합니다!100점입니다! 게임을 계속 진행하시겠습니까?',
+                                icon: 'success',
+
+                                showCancelButton: true,
+                                confirmButtonText: '승인',
+                                cancelButtonText: '취소'
+                            }).then(result => {
+                                if (result.isConfirmed) {
+                                    next();
+                                } else if (result.isDismissed) {
                                     window.location.reload();
-                                });
+                                }
+                            });
                         }
+           
 
                         setScore();
                         next();
